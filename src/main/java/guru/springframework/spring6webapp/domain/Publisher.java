@@ -2,7 +2,9 @@ package guru.springframework.spring6webapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "publishers")
@@ -20,8 +22,11 @@ public class Publisher {
     private String state;
     @Column(nullable = false)
     private Integer zip;
+    @OneToMany(mappedBy = "publisher" , fetch = FetchType.EAGER)
+    private Set<Book> books;
 
     public Publisher() {
+        this.books = new HashSet<>();
     }
 
     public Long getId() {
@@ -71,6 +76,15 @@ public class Publisher {
     public void setZip(Integer zip) {
         this.zip = zip;
     }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
 
     @Override
     public boolean equals(Object o) {
